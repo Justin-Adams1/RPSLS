@@ -1,25 +1,20 @@
-class player{
-
+class Player{
     constructor(name){
+        this.name = name;
         this.score = 0;
     }
-
 }
 
-class human extends player{
-
+class Human extends Player{
     constructor(name){
-        this.name = name;
-        super(score);
+        super(name);
     }
-
 }
-
-class ai extends player{
-
+class AI extends Player{
     constructor(name){
-        this.name = name;
-        super(score);
+        super(name);
     }
-
 }
+module.exports.Player = Player;
+module.exports.Human = Human;
+module.exports.AI = AI;

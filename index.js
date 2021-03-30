@@ -1,4 +1,8 @@
-const player = require('./player');
+const players = require('./player');
 const game = require('./game');
+const prompt = require('prompt-sync')();
 
-game.intro();
+let game1 = new game.Game();
+game1.runGame();
+
+
