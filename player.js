@@ -20,8 +20,9 @@ class Human extends Player{
 class AI extends Player{
     constructor(name){
         super(name);
-        this.choice = "";
+        this.name = "Brain-I-AC";
         this.computer = true;
+        this.choice = "";
     }
 }
 module.exports.Player = Player;
