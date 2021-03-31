@@ -1,3 +1,4 @@
+"use strict";
 const players = require('./player');
 const game = require('./game');
 const prompt = require('prompt-sync')();
