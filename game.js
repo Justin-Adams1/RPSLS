@@ -21,144 +21,175 @@ class Game {
                     this.playerTwo = new players.Human(choice2);
                     break;
                 case 2:
+                    console.log("\n*** Brain-I-AC *** has been connected as your opponent, good luck!");
                     this.playerTwo = new players.AI();
                     break;
             }
             break;
         }while(choice2 != 1 || choice2!= 2);
 
+        let repeatCheck = 1;
 
         do{
         this.roundSelection(this.playerOne, this.playerTwo);
         this.compareThrow(this.playerOne, this.playerTwo);
-        }while(this.playerOne.Score <= 3 || this.playerOne.score <= 3)
         
-        if(this.playerOne.score >=3){
-            console.log(this.playerOne.name + " has won this game!");
-        }else if(this.playerTwo.score >=3){
-            console.log(this.playerOne.name + " has won this game!");
+        if(this.playerOne.score ==3){
+            console.log("\n" + this.playerOne.name + " has won this game!\n\n");
+            repeatCheck =  this.repeatGameChoice();
+        }else if(this.playerTwo.score ==3){
+            console.log("\n" + this.playerTwo.name + " has won this game!\n\n");
+            repeatCheck =  this.repeatGameChoice();
         }
+        }while(repeatCheck == 1 || repeatCheck == 2);
+        
+        return;
+    }
 
+    repeatGameChoice(){
+        console.log("Would you like to play again?\n");
+        let repeatCheck = parseInt(prompt("1.Yes  2.No   :"));
+        do{
+            switch(repeatCheck){
+                case 1:
+                    this.runGame();
+                case 2:
+                    console.log("\n\nGoodbye\n\n");
+                    repeatCheck = 3;
+                    return repeatCheck;
+            }
+            break;
+        }while(repeatCheck != 1 || repeatCheck != 2);
+        return repeatCheck;
+    }
+
+    getRandomNumber(){
+        let numberChoice = Math.floor(Math.random() * 5);
+        do{
+        numberChoice = Math.floor(Math.random() * 5);
+        }while(numberChoice == 0)
+        return numberChoice;
     }
 
     roundSelection(playerOne, playerTwo){
-        this.selectThrow(this.playerOne);
-        if(this.playerTwo.computer){
-            let computerChoice = Math.floor(Math.random() * 5);
-            console.log("\nBrain-I-AC cannot be stopped. Selecting....... Complete.\n")
+        this.selectThrow(playerOne);
+        if(playerTwo.computer){
+            let computerChoice = this.getRandomNumber();
+            console.log("\n***** Brain-I-AC cannot be stopped. Selecting....... Complete.\n")
             switch(computerChoice){
                 case 1:
-                    this.playerTwo.choice = "Rock";
+                    playerTwo.choice = "Rock";
                     break;
                 case 2:
-                    this.playerTwo.choice = "Paper";
+                    playerTwo.choice = "Paper";
                     break;
                 case 3:
-                    this.playerTwo.choice  = "Scissors";
+                    playerTwo.choice  = "Scissors";
                     break;
                 case 4:
-                    this.playerTwo.choice  = "Lizard";
+                    playerTwo.choice  = "Lizard";
                     break;
                 case 5:
-                    this.playerTwo.choice  = "Spock";
+                    playerTwo.choice  = "Spock";
                     break;
             }
-        }if(this.playerTwo.computer = false){
-            this.selectThrow(this.playerTwo);
+        }else{
+            this.selectThrow(playerTwo);
         }
     }
 
     selectThrow(player){
-        let choice2 = parseInt(prompt("Please select one of the following: 1.Rock 2.Paper 3.Scissors 4.Lizard 5.Spock : "));
+        console.log("\n" + player.name + " please enter your selection of the following:\n")
+        let choice2 = parseInt(prompt("1.Rock 2.Paper 3.Scissors 4.Lizard 5.Spock : "));
         do{
             switch(choice2){
                 case 1:
-                    this.playerOne.choice = "Rock";
+                    player.choice = "Rock";
                     break;
                 case 2:
-                    this.playerOne.choice = "Paper";
+                    player.choice = "Paper";
                     break;
                 case 3:
-                    this.playerOne.choice = "Scissors";
+                    player.choice = "Scissors";
                     break;
                 case 4:
-                    this.playerOne.choice = "Lizard";
+                    player.choice = "Lizard";
                     break;
                 case 5:
-                    this.playerOne.choice = "Spock";
+                    player.choice = "Spock";
                     break;
             }
             break;
         }while(choice2 != 1 || choice2!= 2 || choice2 != 3 || choice2 != 4 || choice2 != 5);
         }
 
-    compareThrow(playerOne, PlayerTwo){
-        if(this.playerOne.choice == "Rock" && (this.playerTwo.choice == "Scissors" || this.playerTwo.choice == "Lizard")){
-            console.log(this.playerOne.name + " has won this round! Rock smashes scissors and crushes lizard.\n");
-            this.playerOne.score += 1;
+    compareThrow(playerOne, playerTwo){
+        if(playerOne.choice == "Rock" && (playerTwo.choice == "Scissors" || playerTwo.choice == "Lizard")){
+            console.log(playerOne.name + " has won this round! Rock smashes scissors and crushes lizard.\n");
+            playerOne.score += 1;
+            console.log(playerOne.name + " now has " + playerOne.score + " points. " + playerTwo.name + " has " + playerTwo.score + " points.");
             return;
         }
-        if(this.playerOne.choice == "Paper" && (this.playerTwo.choice == "Rock" || this.playerTwo.choice == "Spock")){
-            console.log(this.playerOne.name + " has won this round! Paper wraps up rock and disproves Spock.\n");
-            this.playerOne.score += 1;
+        else if(playerOne.choice == "Paper" && (playerTwo.choice  == "Rock" || playerTwo.choice  == "Spock")){
+            console.log(playerOne.name + " has won this round! Paper wraps up rock and disproves Spock.\n");
+            playerOne.score += 1;
+            console.log(playerOne.name + " now has " + playerOne.score + " points. " + playerTwo.name + " has " + playerTwo.score + " points.");
             return;
         }
-        if(this.playerOne.choice == "Scissors" && (this.playerTwo.choice == "Paper" || this.playerTwo.choice == "Lizard")){
-            console.log(this.playerOne.name + " has won this round! Scissors cuts paper and decapitates lizard.\n");
-            this.playerOne.score += 1;
+        else if(playerOne.choice == "Scissors" && (playerTwo.choice  == "Paper" || playerTwo.choice  == "Lizard")){
+            console.log(playerOne.name + " has won this round! Scissors cuts paper and decapitates lizard.\n");
+            playerOne.score += 1;
+            console.log(playerOne.name + " now has " + playerOne.score + " points. " + playerTwo.name + " has " + playerTwo.score + " points.");
             return;
         }
-        if(this.playerOne.choice == "Lizard" && (this.playerTwo.choice == "Spock" || this.playerTwo.choice == "Paper")){
-            console.log(this.playerOne.name + " has won this round! Lizard eats paper and poisons Spock.\n");
-            this.playerOne.score += 1;
+        else if(playerOne.choice == "Lizard" && (playerTwo.choice  == "Spock" || playerTwo.choice  == "Paper")){
+            console.log(playerOne.name + " has won this round! Lizard eats paper and poisons Spock.\n");
+            playerOne.score += 1;
+            console.log(playerOne.name + " now has " + playerOne.score + " points. " + playerTwo.name + " has " + playerTwo.score + " points.");
             return;
         }
-        if(this.playerOne.choice == "Spock" && (this.playerTwo.choice == "Scissors" || this.playerTwo.choice == "Rock")){
-            console.log(this.playerOne.name + " has won this round! Spock breaks scissors and vaporizes rock.\n");
-            this.playerOne.score += 1;
+        else if(playerOne.choice == "Spock" && (playerTwo.choice  == "Scissors" || playerTwo.choice  == "Rock")){
+            console.log(playerOne.name + " has won this round! Spock breaks scissors and vaporizes rock.\n");
+            playerOne.score += 1;
+            console.log(playerOne.name + " now has " + playerOne.score + " points. " + playerTwo.name + " has " + playerTwo.score + " points.");
             return;
         }
-        if(this.playerTwo.choice == "Rock" && (this.playerOne.choice == "Scissors" || this.playerOne.choice == "Lizard")){
-            console.log(this.playerTwo.name + " has won this round! Rock smashes scissors and crushes lizard.\n");
-            this.playerOne.score += 1;
+        else if(playerTwo.choice == "Rock" && (playerOne.choice == "Scissors" || playerOne.choice == "Lizard")){
+            console.log(playerTwo.name + " has won this round! Rock smashes scissors and crushes lizard.\n");
+            playerTwo.score += 1;
+            console.log(playerOne.name + " now has " + playerOne.score + " points. " + playerTwo.name + " has " + playerTwo.score + " points.");
             return;
         }
-        if(this.playerTwo.choice == "Paper" && (this.playerOne.choice == "Rock" || this.playerOne.choice == "Spock")){
-            console.log(this.playerTwo.name + " has won this round! Paper wraps up rock and disproves Spock.\n");
-            this.playerOne.score += 1;
+        else if(playerTwo.choice == "Paper" && (playerOne.choice == "Rock" || playerOne.choice == "Spock")){
+            console.log(playerTwo.name + " has won this round! Paper wraps up rock and disproves Spock.\n");
+            playerTwo.score += 1;
+            console.log(playerOne.name + " now has " + playerOne.score + " points. " + playerTwo.name + " has " + playerTwo.score + " points.");
             return;
         }
-        if(this.playerTwo.choice == "Scissors" && (this.playerOne.choice == "Paper" || this.playerOne.choice == "Lizard")){
-            console.log(this.playerOne.name + " has won this round! Scissors cuts paper and decapitates lizard.\n");
-            this.playerTwo.score += 1;
+        else if(playerTwo.choice == "Scissors" && (playerOne.choice == "Paper" || playerOne.choice == "Lizard")){
+            console.log(playerTwo.name + " has won this round! Scissors cuts paper and decapitates lizard.\n");
+            playerTwo.score += 1;
+            console.log(playerOne.name + " now has " + playerOne.score + " points. " + playerTwo.name + " has " + playerTwo.score + " points.");
             return;
         }
-        if(this.playerTwo.choice == "Lizard" && (this.playerOne.choice == "Spock" || this.playerOne.choice == "Paper")){
-            console.log(this.playerTwo.name + " has won this round! Lizard eats paper and poisons Spock.\n");
-            this.playerOne.score += 1;
+        else if(playerTwo.choice == "Lizard" && (playerOne.choice == "Spock" || playerOne.choice == "Paper")){
+            console.log(playerTwo.name + " has won this round! Lizard eats paper and poisons Spock.\n");
+            playerTwo.score += 1;
+            console.log(playerOne.name + " now has " + playerOne.score + " points. " + playerTwo.name + " has " + playerTwo.score + " points.");
             return;
         }
-        if(this.playerTwo.choice == "Spock" && (this.playerOne.choice == "Scissors" || this.playerOne.choice == "Rock")){
-            console.log(this.playerTwo.name + " has won this round! Spock breaks scissors and vaporizes rock.\n");
-            this.playerOne.score += 1;
+        else if(playerTwo.choice == "Spock" && (playerOne.choice == "Scissors" || playerOne.choice == "Rock")){
+            console.log(playerTwo.name + " has won this round! Spock breaks scissors and vaporizes rock.\n");
+            playerTwo.score += 1;
+            console.log(playerOne.name + " now has " + playerOne.score + " points. " + playerTwo.name + " has" + playerTwo.score + " points.");
+            return;
+        }
+        else if(playerTwo.choice == playerOne.choice) {
+            console.log("\nThis round is a tie! \n");
             return;
         }
         
     }
-
-    // getPlayer(choice){ 
-    //     do{
-    //         switch(choice){
-    //             case "1":
-    //                 this.playerTwo = new players.Human(prompt("Please enter your name: "));
-    //                 return this.playerTwo;
-    //             case "2":
-    //                 console.log("\n*** Brain-I-AC *** has been connected to you for this game. Good Luck!\n")
-    //                 this.playerTwo = new players.AI();
-    //                 return this.playerTwo;
-    //         }
-    //     }while(choice != "1" || choice != "2");
-    // }
 
     intro(){
         let x = 0
